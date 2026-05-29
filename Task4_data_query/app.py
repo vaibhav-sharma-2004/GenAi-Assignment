@@ -10,9 +10,7 @@ load_dotenv()
 # Gemini Client
 client = genai.Client(api_key=os.getenv("GEMINI_API_KEY"))
 
-# -----------------------------------
 # READ PDF
-# -----------------------------------
 def read_pdf(file_path):
     text = ""
 
@@ -27,9 +25,7 @@ def read_pdf(file_path):
     return text
 
 
-# -----------------------------------
 # READ DOCX
-# -----------------------------------
 def read_docx(file_path):
     doc = Document(file_path)
 
@@ -38,9 +34,7 @@ def read_docx(file_path):
     return text
 
 
-# -----------------------------------
 # LOAD DOCUMENT
-# -----------------------------------
 def load_document(file_path):
 
     if file_path.endswith(".pdf"):
@@ -53,9 +47,7 @@ def load_document(file_path):
         raise Exception("Unsupported file format")
 
 
-# -----------------------------------
 # ASK QUESTION
-# -----------------------------------
 def ask_question(document_text, question):
 
     prompt = f"""
@@ -82,9 +74,6 @@ QUESTION:
     return response.text
 
 
-# -----------------------------------
-# MAIN
-# -----------------------------------
 if __name__ == "__main__":
 
     file_path = input("Enter document path: ")

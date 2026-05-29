@@ -7,22 +7,22 @@ from dotenv import load_dotenv
 
 load_dotenv()
 
-# -----------------------------
+
 # Configure Gemini API
-# -----------------------------
+
 client = genai.Client(
     api_key=os.getenv("GEMINI_API_KEY")
 )
 
-# -----------------------------
+
 # Create SQLite Database
-# -----------------------------
+
 conn = sqlite3.connect("sales_data.db")
 cursor = conn.cursor()
 
-# -----------------------------
+
 # Create Tables
-# -----------------------------
+
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS customer (
     customer_id INTEGER PRIMARY KEY,
@@ -43,9 +43,7 @@ CREATE TABLE IF NOT EXISTS sales (
 )
 """)
 
-# -----------------------------
 # Insert Sample Data
-# -----------------------------
 cursor.execute("DELETE FROM customer")
 cursor.execute("DELETE FROM sales")
 
@@ -75,17 +73,11 @@ cursor.executemany(
 
 conn.commit()
 
-# -----------------------------
+
 # User Natural Language Input
-# -----------------------------
 user_question = input("Enter your question: ")
 
-# Example:
-# highest sales amount done by a customer in last 3 days
-
-# -----------------------------
 # Prompt for LLM
-# -----------------------------
 prompt = f"""
 You are an expert SQL generator.
 
@@ -117,9 +109,9 @@ Natural Language Query:
 {user_question}
 """
 
-# -----------------------------
+
 # Generate SQL Query
-# -----------------------------
+
 response = client.models.generate_content(
     model="gemini-2.5-flash",
     contents=prompt
@@ -133,9 +125,7 @@ generated_sql = generated_sql.replace("```sql", "").replace("```", "").strip()
 print("\nGenerated SQL Query:")
 print(generated_sql)
 
-# -----------------------------
 # Execute Generated Query
-# -----------------------------
 try:
     cursor.execute(generated_sql)
     results = cursor.fetchall()
