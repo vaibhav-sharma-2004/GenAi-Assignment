@@ -2,3 +2,5 @@
 __pycache__/
 *.pyc
 *.db
+augmented_customers.csv
+module-7-deployment.zip
